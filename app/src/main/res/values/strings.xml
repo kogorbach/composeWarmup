@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">androidCourse</string>
+    <string name="profileSettingsButton">Settings</string>
+    <string name="profileLogoutButton">Log out</string>
+    <string name="profileEditProfileButton">Edit profile</string>
+    <string name="profileViewContactsButton">VIEW MY CONTACTS</string>
+</resources>
