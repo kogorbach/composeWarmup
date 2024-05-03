@@ -3,6 +3,8 @@ package shpp.android.ui.myProfile
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,14 +18,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -124,18 +130,16 @@ fun SettingsColumn(modifier: Modifier) {
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
-            OutlinedButton(
+            StateAwareButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /*TODO*/ },
-                border = BorderStroke(width = 2.dp, color = Color.Black),
-                shape = RoundedCornerShape(6.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.profileEditProfileButton),
-                    color = Color.Black,
-                    fontSize = 14.sp
-                )
-            }
+                shape = RoundedCornerShape(6.dp),
+                content = {
+                    Text(
+                        text = stringResource(R.string.profileEditProfileButton),
+                        color = Color.Black,
+                        fontSize = 14.sp
+                    )
+                })
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(),
@@ -152,6 +156,29 @@ fun SettingsColumn(modifier: Modifier) {
     }
 }
 
+// todo move to common ui elements, add lambda with interaction source value, perhaps a custom view [tech debt]
+@Composable
+fun StateAwareButton(modifier: Modifier = Modifier, shape: Shape, content: @Composable () -> Unit) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val color = if (isPressed) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        Color.White
+    }
+
+    OutlinedButton(
+        modifier = modifier,
+        onClick = { /*TODO*/ },
+        shape = shape,
+        border = BorderStroke(width = 2.dp, color = Color.Black),
+        interactionSource = interactionSource,
+        colors = ButtonDefaults.buttonColors(containerColor = color)
+    ) {
+        content()
+    }
+}
+
 @Composable
 fun SocialNetworkImage(resourceId: Int, contentDescription: String) {
     Image(
@@ -161,7 +188,7 @@ fun SocialNetworkImage(resourceId: Int, contentDescription: String) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MyProfilePreview() {
     AndroidCourseTheme {
         MyProfileScreen(
             modifier = Modifier
