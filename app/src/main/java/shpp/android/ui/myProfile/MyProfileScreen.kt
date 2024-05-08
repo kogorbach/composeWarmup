@@ -26,13 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import shpp.android.R
 import shpp.android.ui.common.ProfileInfoColumn
 import shpp.android.ui.common.SocialNetworkRow
+import shpp.android.ui.model.SocialNetworkIcon
 import shpp.android.ui.theme.AndroidCourseTheme
 import shpp.android.ui.theme.DarkBlue
 
@@ -85,7 +85,11 @@ fun SettingsColumn(modifier: Modifier) {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SocialNetworkRow()
+        SocialNetworkRow(
+            SocialNetworkIcon(R.drawable.ic_facebook, R.string.cd_profileFacebookIcon),
+            SocialNetworkIcon(R.drawable.ic_linkedin, R.string.cd_profileLinkedInIcon),
+            SocialNetworkIcon(R.drawable.ic_instagram, R.string.cd_profileInstagramIcon)
+        )
         Column(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally,

@@ -22,31 +22,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import shpp.android.R
+import shpp.android.ui.model.SocialNetworkIcon
 
-typealias NetworkImage = Pair<Int, String>
 
 @Composable
-fun SocialNetworkRow() {
+fun SocialNetworkRow(
+    vararg networkIcons: SocialNetworkIcon
+) {
     Row(
         modifier = Modifier.padding(top = 62.dp),
         horizontalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        SocialNetworkImage(
-            resourceId = R.drawable.ic_facebook,
-            contentDescription = stringResource(R.string.cd_profileFacebookIcon)
-        )
-        SocialNetworkImage(
-            resourceId = R.drawable.ic_linkedin,
-            contentDescription = stringResource(R.string.cd_profileLinkedInIcon)
-        )
-        SocialNetworkImage(
-            resourceId = R.drawable.ic_instagram,
-            contentDescription = stringResource(R.string.cd_profileInstagramIcon)
-        )
+        //flexibility showoff
+        networkIcons.forEach { icon ->
+            SocialNetworkImage(icon.id, stringResource(icon.contentDescription))
+        }
     }
 }
 
-//todo remove hardcode, fetch from authentication\datastore
 @Composable
 fun ProfileInfoColumn() {
     Column(
@@ -65,8 +58,16 @@ fun ProfileInfoColumn() {
         Text(
             text = "Kostyan", color = MaterialTheme.colorScheme.onPrimary, fontSize = 18.sp
         ) // todo remove hardcode
-        Text(text = "career", color = MaterialTheme.colorScheme.onSecondary, fontSize = 14.sp)
-        Text(text = "address", color = MaterialTheme.colorScheme.onSecondary, fontSize = 14.sp)
+        Text(
+            text = "career",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSecondary
+        )
+        Text(
+            text = "address",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSecondary
+        )
     }
 }
 
