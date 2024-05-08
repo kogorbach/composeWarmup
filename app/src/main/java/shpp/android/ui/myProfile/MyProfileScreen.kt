@@ -1,7 +1,6 @@
 package shpp.android.ui.myProfile
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -13,9 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,32 +23,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import shpp.android.R
+import shpp.android.ui.common.ProfileInfoColumn
+import shpp.android.ui.common.SocialNetworkRow
+import shpp.android.ui.model.SocialNetworkIcon
 import shpp.android.ui.theme.AndroidCourseTheme
 import shpp.android.ui.theme.DarkBlue
-import shpp.android.utils.constants.ContentDescription
 
 @Composable
 fun MyProfileScreen(modifier: Modifier = Modifier) {
     Column {
-        ProfileColumn(modifier = modifier.weight(1f))
+        ProfileHeaderColumn(modifier = modifier.weight(1f))
         SettingsColumn(modifier = Modifier.weight(1f))
     }
 }
 
 @Composable
-fun ProfileColumn(modifier: Modifier) {
+fun ProfileHeaderColumn(modifier: Modifier) {
     Column(
         modifier = modifier.background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -79,22 +72,7 @@ fun ProfileColumn(modifier: Modifier) {
                 )
             }
         }
-        AsyncImage(
-            model = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlFaAvDX_Hej3RM0IbhlzDTzNxrDXNOZk6w7tr9IX367CZsvLXa4ZyBVxQ-r4kD4MTf4M&usqp=CAU",
-            contentDescription = ContentDescription.profileImage,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(113.dp)
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = "Kostyan", color = MaterialTheme.colorScheme.onPrimary, fontSize = 18.sp
-        ) // todo remove hardcode
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "career", color = MaterialTheme.colorScheme.onSecondary, fontSize = 14.sp)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "address", color = MaterialTheme.colorScheme.onSecondary, fontSize = 14.sp)
+        ProfileInfoColumn()
     }
 }
 
@@ -107,22 +85,11 @@ fun SettingsColumn(modifier: Modifier) {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(modifier = Modifier.padding(top = 62.dp)) {
-            SocialNetworkImage(
-                resourceId = R.drawable.ic_facebook,
-                contentDescription = ContentDescription.profileFacebookIcon
-            )
-            Spacer(modifier = Modifier.width(32.dp))
-            SocialNetworkImage(
-                resourceId = R.drawable.ic_linkedin,
-                contentDescription = ContentDescription.profileLinkedInIcon
-            )
-            Spacer(modifier = Modifier.width(32.dp))
-            SocialNetworkImage(
-                resourceId = R.drawable.ic_instagram,
-                contentDescription = ContentDescription.profileInstagramIcon
-            )
-        }
+        SocialNetworkRow(
+            SocialNetworkIcon(R.drawable.ic_facebook, R.string.cd_profileFacebookIcon),
+            SocialNetworkIcon(R.drawable.ic_linkedin, R.string.cd_profileLinkedInIcon),
+            SocialNetworkIcon(R.drawable.ic_instagram, R.string.cd_profileInstagramIcon)
+        )
         Column(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -148,8 +115,7 @@ fun SettingsColumn(modifier: Modifier) {
             ) {
                 Text(
                     text = stringResource(R.string.profileViewContactsButton),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight(600)
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
@@ -179,12 +145,6 @@ fun StateAwareButton(modifier: Modifier = Modifier, shape: Shape, content: @Comp
     }
 }
 
-@Composable
-fun SocialNetworkImage(resourceId: Int, contentDescription: String) {
-    Image(
-        painter = painterResource(id = resourceId), contentDescription = contentDescription
-    )
-}
 
 @Preview(showBackground = true)
 @Composable

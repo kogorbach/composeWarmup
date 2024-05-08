@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_profileImage">profile image</string>
+    <string name="cd_profileFacebookIcon">profile facebook</string>
+    <string name="cd_profileInstagramIcon">profile instagram</string>
+    <string name="cd_profileLinkedInIcon">profile linkedin</string>
+</resources>
+
