@@ -19,7 +19,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import shpp.android.R
 import shpp.android.ui.model.SocialNetworkIcon
@@ -56,7 +55,9 @@ fun ProfileInfoColumn() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Kostyan", color = MaterialTheme.colorScheme.onPrimary, fontSize = 18.sp
+            text = "Kostyan",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onPrimary
         ) // todo remove hardcode
         Text(
             text = "career",
